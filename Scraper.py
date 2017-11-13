@@ -86,6 +86,9 @@ class Scraper():
         with open(filename, 'w') as spoiler_file:
             json.dump(curr_data, spoiler_file)
 
+    """
+    collect spoilers
+    """
     def get_spoilers(self):
         post_ids = ['32e2vv', '336lyi', '33z8s5', '34rvno', '35jpn9', '36bh62', '375e8z', '380v9t', '38yyly', '39v18c']
 
@@ -97,14 +100,34 @@ class Scraper():
                 temp = {'data': comment, 'tag': 1}
                 comment_map.append(temp)
 
+            print 'Adding: ', str(len(comment_map)), 'spoilers'
             self.save_comments('spoilers.json', comment_map)
-
-            break
-
             time.sleep(5)
 
-        
+    """
+    collect not spoiler data
+    """
+    def get_not_spoiler_data(self):
+        post_ids = ['7cd22v', '7bfg76', '7c3q6z', '6ep9fd', '7c3q9y', '7bd71a', '776mx6']
+
+        for curr_id in post_ids:
+            processed_comments = self.format_comments(self.get_comments(curr_id))
+
+            comment_map = []
+            for comment in processed_comments:
+                temp = {'data': comment, 'tag': 0}
+                comment_map.append(temp)
+
+            print 'Adding: ', str(len(comment_map)), 'not spoilers'
+            self.save_comments('not_spoilers.json', comment_map)
+            time.sleep(5)
+
+    def scrape(self):
+        self.get_spoilers()
+        self.get_not_spoiler_data()
+
+
         
 
 sc = Scraper()
-sc.get_spoilers()
+sc.scrape()
