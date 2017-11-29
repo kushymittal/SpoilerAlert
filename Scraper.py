@@ -108,7 +108,7 @@ class Scraper():
     collect not spoiler data
     """
     def get_not_spoiler_data(self):
-        post_ids = ['7cd22v', '7bfg76', '7c3q6z', '6ep9fd', '7c3q9y', '7bd71a', '776mx6']
+        post_ids = ['162cgh', '771i03', '7ct7j5', '6gsnqu', '7g4za4', '7g5bad', '5pduxp']
 
         for curr_id in post_ids:
             processed_comments = self.format_comments(self.get_comments(curr_id))
@@ -123,7 +123,7 @@ class Scraper():
             time.sleep(5)
 
     def scrape(self):
-        self.get_spoilers()
+        #self.get_spoilers()
         self.get_not_spoiler_data()
 
 
