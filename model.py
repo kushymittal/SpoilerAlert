@@ -13,14 +13,6 @@ import plotly.graph_objs as go
 import json
 import numpy as np
 
-"""
-@TODO
-
-2. plot accuracy as a function of amount of training data used
-3. more meterics and graphs?
-4. Tests
-"""
-
 def load_data(filename):
     """
     read json data from file
@@ -85,10 +77,12 @@ if __name__ == '__main__':
             predicted_labels = np.append(predicted_spoilers, predicted_other)
 
             # Result Metrics
-            #print metrics.classification_report(test_labels, predicted_labels)
-            #print metrics.confusion_matrix(test_labels, predicted_labels)
+            print metrics.classification_report(test_labels, predicted_labels)
+            print metrics.confusion_matrix(test_labels, predicted_labels)
 
             accuracy = metrics.accuracy_score(test_labels, predicted_labels)
+
+            assert accuracy >= 0.85
 
             test_size_x.append(test_size)
             test_accuracy_y.append(accuracy)

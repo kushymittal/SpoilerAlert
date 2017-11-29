@@ -123,8 +123,9 @@ class Scraper():
             time.sleep(5)
 
     def scrape(self):
+        pass
         #self.get_spoilers()
-        self.get_not_spoiler_data()
+        #self.get_not_spoiler_data()
 
 
         
