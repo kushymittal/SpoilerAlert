@@ -13,6 +13,8 @@ import plotly.graph_objs as go
 import json
 import numpy as np
 
+import pickle
+
 def load_data(filename):
     """
     read json data from file
@@ -32,7 +34,7 @@ if __name__ == '__main__':
     test_size_x = []
     test_accuracy_y = []
 
-    for i in range(5, 25):
+    for i in range(24, 25):
         test_size = float(i) / 100
 
         # split data into training and testing sets
@@ -72,17 +74,17 @@ if __name__ == '__main__':
             gs_clf = GridSearchCV(svm_clf, parameters, n_jobs=1)
             gs_clf = gs_clf.fit(gs_train, gs_labels)    
 
+            pickle.dump(gs_clf, open('model.sav', 'wb'))
+
             predicted_spoilers = gs_clf.predict(spoiler_data_test)
             predicted_other = gs_clf.predict(other_data_test)
             predicted_labels = np.append(predicted_spoilers, predicted_other)
 
             # Result Metrics
-            print metrics.classification_report(test_labels, predicted_labels)
-            print metrics.confusion_matrix(test_labels, predicted_labels)
+            print 'Classification Report\n', metrics.classification_report(test_labels, predicted_labels)
+            print 'Confusion Matrix\n', metrics.confusion_matrix(test_labels, predicted_labels)
 
             accuracy = metrics.accuracy_score(test_labels, predicted_labels)
-
-            assert accuracy >= 0.85
 
             test_size_x.append(test_size)
             test_accuracy_y.append(accuracy)
