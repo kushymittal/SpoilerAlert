@@ -1,15 +1,9 @@
 import pickle
 
-from flask import Flask
-from flask import request
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
-
-#from OpenSSL import SSL 
-#context = SSL.Context(SSL.SSLv23_METHOD)
-#context.use_privatekey_file('alice.key')
-#context.use_certificate_file('alice.crt')
 
 model = pickle.load(open('model.sav', 'rb'))
 
@@ -33,9 +27,10 @@ def classify_posts():
         else:
             print data.values()[i].encode('utf-8'), ': Spoiler'
 
-    return 'OK'
+    return ','.join([str(x) for x in output])
 
 if __name__ == '__main__':
-    #context = ('alice.crt', 'alice.key')
-    #app.run(ssl_context=context)
-    app.run()
+    context = ('cert.pem', 'key.pem')
+    app.run(ssl_context=context)
+    #app.run(ssl_context='adhoc')
+    #app.run()
