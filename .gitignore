@@ -2,3 +2,5 @@
 *.json
 .DS_Store
 *.sav
+*.pem
+jquery-3.2.1.min.js
