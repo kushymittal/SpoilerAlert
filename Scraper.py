@@ -29,6 +29,7 @@ class Scraper():
 
     """
     get all top level comments for a given post id
+    @paramL post_id the post whose comments we need to scrape
     """
     def get_comments(self, post_id):
         client_id, client_secret, user_agent = self.get_credentials()
@@ -52,6 +53,7 @@ class Scraper():
 
     """
     pre-processing comments
+    @param comment_list the list of comments we need to format
     """
     def format_comments(self, comment_list):
         processed = []
@@ -70,6 +72,8 @@ class Scraper():
 
     """
     dump to file
+    @param filename the file to save to
+    @oaram comment_map comments mapped to their tags
     """
     def save_comments(self, filename, comment_map):
         if not os.path.isfile(filename):
