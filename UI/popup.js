@@ -25,12 +25,31 @@ function getCurrentTabURL() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+  // Change text on extension toggle
   document.getElementById('onoff').addEventListener('click', changeText);
-  
-  chrome.tabs.executeScript(null, {
-    file: "bg_script.js"
-  }, function(results) {
-    console.log('finished executing' + results);
+
+  // Refresh page on extension toggle
+  document.getElementById('onoff').addEventListener('click', function() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.update(tabs[0].id, {url: tabs[0].url});
+    });
   });
-})
+
+  var toggle = false;
+  document.getElementById('onoff').addEventListener('click', function() {
+    console.log('here');
+    toggle = ! toggle;
+    if (toggle) {
+      // Script to block spoilers
+      chrome.tabs.executeScript(null, {
+        file: "bg_script.js"
+      }, function() {}
+      );
+    }
+    else {
+      chrome.tabs.executeScript(null, {code: "console.log('off');"});
+    }
+  });
+  
+});
 

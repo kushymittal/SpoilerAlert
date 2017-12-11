@@ -1,17 +1,17 @@
 /*
-1. On/Off functionality (only work when on, reload page on toggle)
-2. 
+1. On/Off functionality (only work when on)
+2. DEsign rubric
 */
 
+if (window.location.hostname.includes('twitter')) {
+    scrapeTweets();
+}
 
-console.log(window.location);
-scrapeTweets();
 function scrapeTweets() {
     var tweets_query = $('.TweetTextSize');
-    console.log(tweets_query);
-
     var data = new FormData();
 
+    // Collect tweets
     var tweet_data = new Array(tweets_query.length);
     for (var i = 0; i < tweet_data.length; i++) {
         
@@ -20,13 +20,13 @@ function scrapeTweets() {
         data.append(key, tweet_data[i]);
     }
 
-    console.log(tweet_data);
-
+    // create post request
     var xhr = createCORSRequest('POST', 'https://localhost:5000/classify');
     if (!xhr) {
         console.log('CORS not suppoerted');
     }
 
+    // block spoilers
     xhr.onload = function() {
         var response_labels = xhr.responseText.split(',');
         console.log(response_labels);
